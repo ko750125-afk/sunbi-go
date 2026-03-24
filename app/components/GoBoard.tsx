@@ -25,6 +25,59 @@ function initBoard(problem: Problem): CellState[][] {
   return grid
 }
 
+const checkCaptures = (board: CellState[][], newlyPlacedRow: number, newlyPlacedCol: number, stoneColor: 'black' | 'white'): CellState[][] => {
+  const size = board.length;
+  const nextBoard = board.map(r => [...r]);
+  const opponentColor = stoneColor === 'black' ? 'white' : 'black';
+  const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+  const getGroup = (r: number, c: number, color: CellState) => {
+    const group: [number, number][] = [];
+    const visited = Array(size).fill(0).map(() => Array(size).fill(false));
+    const stack: [number, number][] = [[r, c]];
+    visited[r][c] = true;
+    let liberties = 0;
+
+    while (stack.length > 0) {
+      const [currR, currC] = stack.pop()!;
+      group.push([currR, currC]);
+
+      for (const [dr, dc] of dirs) {
+        const nr = currR + dr;
+        const nc = currC + dc;
+        if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+          if (nextBoard[nr][nc] === 'empty') {
+            liberties++;
+          } else if (nextBoard[nr][nc] === color && !visited[nr][nc]) {
+            visited[nr][nc] = true;
+            stack.push([nr, nc]);
+          }
+        }
+      }
+    }
+    return { group, liberties };
+  };
+
+  // Check all 4 adjacent cells for opponent groups to capture
+  for (const [dr, dc] of dirs) {
+    const nr = newlyPlacedRow + dr;
+    const nc = newlyPlacedCol + dc;
+    if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+      if (nextBoard[nr][nc] === opponentColor) {
+        const { group, liberties } = getGroup(nr, nc, opponentColor);
+        if (liberties === 0) {
+          // Capture!
+          group.forEach(([gr, gc]) => {
+            nextBoard[gr][gc] = 'empty';
+          });
+        }
+      }
+    }
+  }
+
+  return nextBoard;
+};
+
 export default function GoBoard({ problem, onSolve, onProgress, disabled = false, demoMode = false }: GoBoardProps) {
   const size = problem.boardSize
   const [boardState, setBoardState] = useState<CellState[][]>(() => initBoard(problem))
@@ -49,7 +102,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
     setBoardState(prev => {
       const next = prev.map(r => [...r])
       next[row][col] = color
-      return next
+      return checkCaptures(next, row, col, color)
     })
     setLastMove(key)
     setAnimatingCell(key)
@@ -139,7 +192,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
         setBoardState(prev => {
           const next = prev.map(r => [...r]);
           next[row][col] = color;
-          return next;
+          return checkCaptures(next, row, col, color);
         });
         
         const key = `${col + 1},${row + 1}`;
@@ -190,13 +243,14 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
           className="relative rounded-xl shadow-2xl border-4 border-[#b5813c]/50"
           style={{
             background: 'linear-gradient(135deg, #d4a55a 0%, #c8953e 50%, #b5813c 100%)',
-            padding: Math.floor(cellPx * 0.4) + 'px',
+            padding: Math.floor(cellPx * 0.5) + 'px',
             width: 'max-content',
           }}
         >
         {/* Grid */}
         <div
           style={{
+            position: 'relative',
             display: 'grid',
             gridTemplateColumns: `repeat(${size}, ${cellPx}px)`,
             gridTemplateRows: `repeat(${size}, ${cellPx}px)`,
@@ -204,6 +258,18 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
             margin: '0 auto',
           }}
         >
+          {/* Coordinate Labels */}
+          {Array.from({ length: size }).map((_, i) => (
+            <div key={`coord-top-${i}`} className="absolute text-[#4a2a0a]/60 font-bold text-sm md:text-base pointer-events-none" style={{ left: i * cellPx + cellPx/2, top: -24, transform: 'translateX(-50%)' }}>
+              {i + 1}
+            </div>
+          ))}
+          {Array.from({ length: size }).map((_, i) => (
+            <div key={`coord-left-${i}`} className="absolute text-[#4a2a0a]/60 font-bold text-sm md:text-base pointer-events-none" style={{ top: i * cellPx + cellPx/2, left: -24, transform: 'translateY(-50%)' }}>
+              {i + 1}
+            </div>
+          ))}
+
           {Array.from({ length: size }).map((_, row) =>
             Array.from({ length: size }).map((_, col) => {
               const key = `${col + 1},${row + 1}`
