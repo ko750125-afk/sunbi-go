@@ -115,8 +115,13 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
       if (prev[row][col] !== 'empty') return prev;
       const next = prev.map(r => [...r])
       next[row][col] = color
-      return checkCaptures(next, row, col, color)
+      return next // Render the placed stone first
     })
+
+    // Process captures after a short delay so the user sees the stone
+    setTimeout(() => {
+      setBoardState(prev => checkCaptures(prev, row, col, color))
+    }, 200)
     setLastMove(key)
     setAnimatingCell(key)
     setTimeout(() => setAnimatingCell(null), 300)
@@ -206,8 +211,13 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
           if (prev[row][col] !== 'empty') return prev; // prevent overwrite
           const next = prev.map(r => [...r]);
           next[row][col] = color;
-          return checkCaptures(next, row, col, color);
+          return next;
         });
+
+        // Delay capture processing in demo mode to visualize the placement
+        demoTimeouts.current.push(setTimeout(() => {
+          setBoardState(prev => checkCaptures(prev, row, col, color));
+        }, 200));
         
         const key = `${col + 1},${row + 1}`;
         setLastMove(key);
