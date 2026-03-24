@@ -47,6 +47,7 @@ export default function SolvePage() {
   const [attempts, setAttempts] = useState(0)
   const [progressMsg, setProgressMsg] = useState('')
   const [showProgress, setShowProgress] = useState(false)
+  const [showAnswer, setShowAnswer] = useState(false)
 
   const handleSolve = useCallback((isCorrect: boolean) => {
     setShowProgress(false)
@@ -101,6 +102,7 @@ export default function SolvePage() {
     playClickSound()
     setStatus('playing')
     setShowProgress(false)
+    setShowAnswer(false)
     setProgressMsg('')
     setBoardKey(prev => prev + 1)
   }
@@ -116,6 +118,7 @@ export default function SolvePage() {
       setStatus('playing')
       setBoardKey(prev => prev + 1)
       setAttempts(0)
+      setShowAnswer(false)
     } else {
       router.push('/')
     }
@@ -271,16 +274,47 @@ export default function SolvePage() {
           </div>
         )}
 
-        {/* Remaining UI for wrong state (fallback/backup) */}
+        {/* Remaining UI for wrong state */}
         {status === 'wrong' && (
           <div className="space-y-6">
-            <button
-              onClick={handleRetry}
-              className="w-full h-24 bg-primary text-on-primary text-3xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
-            >
-              <span className="material-symbols-outlined text-4xl">refresh</span>
-              다시 도전!
-            </button>
+            <div className="flex gap-4">
+              <button
+                onClick={handleRetry}
+                className="flex-1 h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-2 active:scale-95"
+              >
+                <span className="material-symbols-outlined text-3xl">refresh</span>
+                다시 도전
+              </button>
+              <button
+                onClick={() => setShowAnswer(true)}
+                className="flex-1 h-20 bg-surface-container-highest text-primary text-2xl font-black rounded-xl shadow-lg border-2 border-primary/20 hover:bg-surface-container transition-all flex items-center justify-center gap-2 active:scale-95"
+              >
+                <span className="material-symbols-outlined text-3xl">visibility</span>
+                정답 보기
+              </button>
+            </div>
+            
+            {showAnswer && (
+              <div className="bg-surface-container rounded-2xl p-6 space-y-3 border border-outline-variant animate-in slide-in-from-top-4">
+                <div className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: `'FILL' 1` }}>
+                    lightbulb
+                  </span>
+                  <h3 className="text-2xl font-black text-primary">정답 도우미</h3>
+                </div>
+                <p className="text-2xl text-on-surface leading-relaxed">{problem.explanation}</p>
+                <div className="bg-surface-container-high rounded-xl p-4 mt-2">
+                  <p className="text-lg font-bold text-on-surface-variant mb-2">정답 수순:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {problem.solution.map((move, idx) => (
+                      <span key={idx} className="bg-background px-3 py-1 rounded-full text-sm font-medium border border-outline-variant text-on-surface">
+                        {idx % 2 === 0 ? '흑' : '백'} {move}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

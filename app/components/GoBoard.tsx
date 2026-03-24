@@ -130,15 +130,15 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
       )}
 
       {/* Board */}
-      <div
-        className="relative rounded-xl shadow-2xl border-4 border-[#b5813c]/50"
-        style={{
-          background: 'linear-gradient(135deg, #d4a55a 0%, #c8953e 50%, #b5813c 100%)',
-          padding: Math.floor(cellPx * 0.4) + 'px',
-          width: '100%',
-          maxWidth: boardWidthPx + cellPx + 'px',
-        }}
-      >
+      <div className="w-full overflow-x-auto pb-4 px-2 flex justify-center">
+        <div
+          className="relative rounded-xl shadow-2xl border-4 border-[#b5813c]/50"
+          style={{
+            background: 'linear-gradient(135deg, #d4a55a 0%, #c8953e 50%, #b5813c 100%)',
+            padding: Math.floor(cellPx * 0.4) + 'px',
+            width: 'max-content',
+          }}
+        >
         {/* Grid */}
         <div
           style={{
@@ -235,6 +235,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
             })
           )}
         </div>
+      </div>
       </div>
 
       {/* Status bar */}
