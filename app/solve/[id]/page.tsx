@@ -42,6 +42,13 @@ export default function SolvePage() {
   const id = Number(params.id)
   const problem = problems.find(p => p.id === id)
 
+  const playerColor = useMemo(() => {
+    if (!problem) return 'black'
+    const bc = problem.stones.filter(s => s.color === 'black').length
+    const wc = problem.stones.filter(s => s.color === 'white').length
+    return bc <= wc ? 'black' : 'white'
+  }, [problem])
+
   const [status, setStatus] = useState<GameStatus>('playing')
   const [boardKey, setBoardKey] = useState(0)
   const [attempts, setAttempts] = useState(0)
@@ -159,7 +166,7 @@ export default function SolvePage() {
         </div>
 
         {/* Problem info */}
-        <div className="bg-surface-container rounded-xl p-6 space-y-3">
+        <div className="bg-surface-container rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-3 flex-wrap">
             <span className={`px-4 py-1 rounded-full text-xl font-bold ${difficultyColor[problem.difficulty]}`}>
               {difficultyLabel[problem.difficulty]}
@@ -169,7 +176,21 @@ export default function SolvePage() {
             <span className="text-xl text-on-surface-variant">{problem.solution.length}수 완성</span>
           </div>
           <h1 className="text-4xl font-black text-primary">{problem.title}</h1>
-          <p className="text-2xl text-on-surface-variant">
+          
+          <div className="flex items-center gap-4 bg-surface-container-high p-4 rounded-xl border border-primary/20 shadow-sm w-fit pr-8">
+            <div
+              className="w-8 h-8 rounded-full shadow-md"
+              style={{
+                background: playerColor === 'black' ? '#000' : '#fff',
+                border: playerColor === 'white' ? '2px solid #aaa' : 'none',
+              }}
+            />
+            <p className="text-2xl font-black text-primary">
+              당신은 <span className="text-3xl">{playerColor === 'black' ? '흑' : '백'}</span>입니다
+            </p>
+          </div>
+          
+          <p className="text-2xl text-on-surface-variant pt-2">
             {status === 'playing' ? '바둑판 위를 터치하여 최선의 수를 두세요.' : ''}
           </p>
         </div>

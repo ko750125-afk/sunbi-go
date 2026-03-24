@@ -374,13 +374,6 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
 
       {/* Status bar */}
       <div className="flex items-center gap-3 text-xl text-on-surface-variant font-bold">
-        <div
-          className="w-5 h-5 rounded-full shadow-sm"
-          style={{
-            background: playerColor === 'black' ? '#000' : '#fff',
-            border: playerColor === 'white' ? '1px solid #aaa' : 'none',
-          }}
-        />
         <span>
           {aiThinking
             ? '상대 응수 중...'
