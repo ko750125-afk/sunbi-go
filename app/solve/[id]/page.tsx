@@ -186,7 +186,7 @@ export default function SolvePage() {
               }}
             />
             <p className="text-2xl font-black text-primary">
-              당신은 <span className="text-3xl">{playerColor === 'black' ? '흑' : '백'}</span>입니다
+              당신이 <span className="text-3xl">{playerColor === 'black' ? '흑' : '백'}</span>입니다
             </p>
           </div>
           
