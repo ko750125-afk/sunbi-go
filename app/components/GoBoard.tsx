@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { Problem } from '../types'
 import { playStoneSound } from '../utils/audio'
 
@@ -9,6 +9,7 @@ interface GoBoardProps {
   onSolve: (isCorrect: boolean) => void
   onProgress?: (moveIndex: number, total: number) => void
   disabled?: boolean
+  demoMode?: boolean
 }
 
 type CellState = 'empty' | 'black' | 'white'
@@ -24,7 +25,7 @@ function initBoard(problem: Problem): CellState[][] {
   return grid
 }
 
-export default function GoBoard({ problem, onSolve, onProgress, disabled = false }: GoBoardProps) {
+export default function GoBoard({ problem, onSolve, onProgress, disabled = false, demoMode = false }: GoBoardProps) {
   const size = problem.boardSize
   const [boardState, setBoardState] = useState<CellState[][]>(() => initBoard(problem))
   const [moveIndex, setMoveIndex] = useState(0)          // which solution move we're on
@@ -33,6 +34,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
   const [aiThinking, setAiThinking] = useState(false)
   const [animatingCell, setAnimatingCell] = useState<string | null>(null)
   const isProcessing = useRef(false)
+  const demoTimeouts = useRef<NodeJS.Timeout[]>([])
 
   // Player always plays even indices (0,2,4…), AI plays odd indices (1,3,5…)
   const playerColor: 'black' | 'white' = (() => {
@@ -55,10 +57,12 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
   }, [])
 
   const handleCellClick = useCallback((row: number, col: number) => {
-    if (disabled || aiThinking || isProcessing.current) return
+    if (disabled || demoMode || aiThinking || isProcessing.current) return
     if (boardState[row][col] !== 'empty') return
     if (moveIndex >= problem.solution.length) return
-
+    
+    // ... [existing click logic unchanged below] ...
+    
     const moveStr = `${col + 1},${row + 1}`
     const expectedMove = problem.solution[moveIndex]
 
@@ -107,7 +111,58 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
         onSolve(true)
       }
     }, 550)
-  }, [disabled, aiThinking, boardState, moveIndex, problem.solution, playerColor, aiColor, placeStone, onSolve, onProgress])
+  }, [disabled, demoMode, aiThinking, boardState, moveIndex, problem.solution, playerColor, aiColor, placeStone, onSolve, onProgress])
+
+  useEffect(() => {
+    if (demoMode) {
+      setBoardState(initBoard(problem))
+      setMoveIndex(0)
+      setLastMove(null)
+      setWrongMove(null)
+      setAiThinking(false)
+      
+      let step = 0;
+      demoTimeouts.current.forEach(clearTimeout);
+      demoTimeouts.current = [];
+
+      const runStep = () => {
+        if (step >= problem.solution.length) return;
+        
+        const moveStr = problem.solution[step];
+        const [colStr, rowStr] = moveStr.split(',');
+        const col = parseInt(colStr) - 1;
+        const row = parseInt(rowStr) - 1;
+        const color = step % 2 === 0 ? playerColor : aiColor;
+
+        playStoneSound(step % 2 === 1);
+        
+        setBoardState(prev => {
+          const next = prev.map(r => [...r]);
+          next[row][col] = color;
+          return next;
+        });
+        
+        const key = `${col + 1},${row + 1}`;
+        setLastMove(key);
+        setAnimatingCell(key);
+        setMoveIndex(step + 1);
+
+        demoTimeouts.current.push(setTimeout(() => setAnimatingCell(null), 300));
+
+        step++;
+        demoTimeouts.current.push(setTimeout(runStep, 800));
+      };
+
+      demoTimeouts.current.push(setTimeout(runStep, 600));
+    } else {
+      demoTimeouts.current.forEach(clearTimeout);
+      demoTimeouts.current = [];
+    }
+
+    return () => {
+      demoTimeouts.current.forEach(clearTimeout);
+    };
+  }, [demoMode, problem, playerColor, aiColor]);
 
   // Determine cell and stone sizes based on board size
   const cellPx = size <= 5 ? 64 : size <= 7 ? 52 : 44

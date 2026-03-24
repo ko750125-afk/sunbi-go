@@ -194,6 +194,7 @@ export default function SolvePage() {
             onSolve={handleSolve}
             onProgress={handleProgress}
             disabled={status !== 'playing'}
+            demoMode={showAnswer}
           />
           
           {/* Status Overlays */}
@@ -303,16 +304,7 @@ export default function SolvePage() {
                   <h3 className="text-2xl font-black text-primary">정답 도우미</h3>
                 </div>
                 <p className="text-2xl text-on-surface leading-relaxed">{problem.explanation}</p>
-                <div className="bg-surface-container-high rounded-xl p-4 mt-2">
-                  <p className="text-lg font-bold text-on-surface-variant mb-2">정답 수순:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {problem.solution.map((move, idx) => (
-                      <span key={idx} className="bg-background px-3 py-1 rounded-full text-sm font-medium border border-outline-variant text-on-surface">
-                        {idx % 2 === 0 ? '흑' : '백'} {move}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+
               </div>
             )}
           </div>
