@@ -198,7 +198,7 @@ export default function SolvePage() {
           />
           
           {/* Status Overlays */}
-          {status === 'wrong' && (
+          {status === 'wrong' && !showAnswer && (
             <div className="absolute inset-0 flex items-center justify-center bg-error-container/20 pointer-events-none rounded-xl">
               <div className="bg-error text-on-error px-8 py-4 rounded-full shadow-2xl animate-bounce flex items-center gap-3">
                 <span className="material-symbols-outlined text-4xl">close</span>
@@ -208,68 +208,66 @@ export default function SolvePage() {
           )}
         </div>
 
-        {/* Status: Correct Overlay (Premium) */}
+        {/* Status: Correct UI */}
         {status === 'correct' && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-surface-container-high border-4 border-primary rounded-3xl p-8 max-w-lg w-full shadow-2xl space-y-8 slide-up">
-              <div className="text-center space-y-4">
-                <div className="mx-auto w-24 h-24 bg-primary rounded-full flex items-center justify-center animate-bounce shadow-lg">
-                  <span className="material-symbols-outlined text-6xl text-on-primary" style={{ fontVariationSettings: `'FILL' 1` }}>
-                    verified
-                  </span>
-                </div>
-                <h2 className="text-5xl font-black text-primary leading-tight">축하합니다!<br />정답입니다!</h2>
+          <div className="bg-surface-container-high border-4 border-primary rounded-3xl p-8 w-full shadow-2xl space-y-8 animate-in slide-in-from-bottom-4 mt-8">
+            <div className="text-center space-y-4">
+              <div className="mx-auto w-24 h-24 bg-primary rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                <span className="material-symbols-outlined text-6xl text-on-primary" style={{ fontVariationSettings: `'FILL' 1` }}>
+                  verified
+                </span>
               </div>
+              <h2 className="text-5xl font-black text-primary leading-tight">축하합니다!<br />정답입니다!</h2>
+            </div>
 
-              {/* Explanation */}
-              <div className="bg-surface-container rounded-2xl p-6 space-y-3 border border-outline-variant">
-                <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: `'FILL' 1` }}>
-                    lightbulb
-                  </span>
-                  <h3 className="text-2xl font-black text-primary">공부 한 마디</h3>
-                </div>
-                <p className="text-2xl text-on-surface leading-relaxed">{problem.explanation}</p>
+            {/* Explanation */}
+            <div className="bg-surface-container rounded-2xl p-6 space-y-3 border border-outline-variant">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: `'FILL' 1` }}>
+                  lightbulb
+                </span>
+                <h3 className="text-2xl font-black text-primary">공부 한 마디</h3>
               </div>
+              <p className="text-2xl text-on-surface leading-relaxed">{problem.explanation}</p>
+            </div>
 
-              {/* Navigation buttons */}
-              <div className="flex flex-col gap-4">
-                {mode === 'shuffle' ? (
+            {/* Navigation buttons */}
+            <div className="flex flex-col gap-4">
+              {mode === 'shuffle' ? (
+                <button 
+                  onClick={handleNextShuffle}
+                  className="h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
+                >
+                  다음 문제 풀기
+                  <span className="material-symbols-outlined text-4xl">shuffle</span>
+                </button>
+              ) : nextProblem ? (
+                <Link href={`/solve/${nextProblem.id}`} className="w-full">
                   <button 
-                    onClick={handleNextShuffle}
-                    className="h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
+                    onClick={() => playClickSound()}
+                    className="w-full h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
                   >
-                    다음 문제 풀기
-                    <span className="material-symbols-outlined text-4xl">shuffle</span>
+                    다음 문제
+                    <span className="material-symbols-outlined text-4xl">arrow_forward</span>
                   </button>
-                ) : nextProblem ? (
-                  <Link href={`/solve/${nextProblem.id}`} className="w-full">
-                    <button 
-                      onClick={() => playClickSound()}
-                      className="w-full h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
-                    >
-                      다음 문제
-                      <span className="material-symbols-outlined text-4xl">arrow_forward</span>
-                    </button>
-                  </Link>
-                ) : null}
-                
-                <div className="flex gap-4">
-                  <button
-                    onClick={handleRetry}
-                    className="flex-1 h-20 bg-surface-container text-primary text-xl font-bold rounded-2xl border-2 border-outline-variant hover:bg-surface-container-high transition-all flex items-center justify-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-2xl">refresh</span>
-                    다시 풀어보기
-                  </button>
-                  <button 
-                    onClick={() => { playClickSound(); router.push('/'); }}
-                    className="flex-1 h-20 bg-surface-container text-on-surface-variant text-xl font-bold rounded-2xl border-2 border-outline-variant hover:bg-surface-container-high transition-all flex items-center justify-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-2xl">home</span>
-                    홈으로 이동
-                  </button>
-                </div>
+                </Link>
+              ) : null}
+              
+              <div className="flex gap-4">
+                <button
+                  onClick={handleRetry}
+                  className="flex-1 h-20 bg-surface-container text-primary text-xl font-bold rounded-2xl border-2 border-outline-variant hover:bg-surface-container-high transition-all flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-2xl">refresh</span>
+                  다시 풀어보기
+                </button>
+                <button 
+                  onClick={() => { playClickSound(); router.push('/'); }}
+                  className="flex-1 h-20 bg-surface-container text-on-surface-variant text-xl font-bold rounded-2xl border-2 border-outline-variant hover:bg-surface-container-high transition-all flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-2xl">home</span>
+                  홈으로 이동
+                </button>
               </div>
             </div>
           </div>

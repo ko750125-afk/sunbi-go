@@ -252,13 +252,12 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
       )}
 
       {/* Board */}
-      <div className="w-full overflow-x-auto pb-4 px-2 flex justify-center">
+      <div className="w-full overflow-x-auto pb-4 px-2 text-center" style={{ scrollBehavior: 'smooth' }}>
         <div
-          className="relative rounded-xl shadow-2xl border-4 border-[#b5813c]/50"
+          className="relative inline-block text-left rounded-xl shadow-2xl border-4 border-[#b5813c]/50"
           style={{
             background: 'linear-gradient(135deg, #d4a55a 0%, #c8953e 50%, #b5813c 100%)',
             padding: Math.floor(cellPx * 0.5) + 'px',
-            width: 'max-content',
           }}
         >
         {/* Grid */}
