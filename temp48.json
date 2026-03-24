@@ -1,0 +1,91 @@
+{
+  "title": "이단 패싸움",
+  "difficulty": "hard",
+  "boardSize": 13,
+  "stones": [
+    {
+      "x": 9,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 11,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 10,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "color": "white"
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "color": "white"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "color": "white"
+    }
+  ],
+  "solution": [
+    "10,5",
+    "10,4",
+    "9,5",
+    "11,5",
+    "10,6"
+  ],
+  "explanation": "두 번의 패싸움을 승리해야만 완생할 수 있는 난이도 최상의 문제입니다.",
+  "id": 48
+}

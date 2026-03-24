@@ -59,6 +59,7 @@ const checkCaptures = (board: CellState[][], newlyPlacedRow: number, newlyPlaced
   };
 
   // Check all 4 adjacent cells for opponent groups to capture
+  let capturedOpponent = false;
   for (const [dr, dc] of dirs) {
     const nr = newlyPlacedRow + dr;
     const nc = newlyPlacedCol + dc;
@@ -70,8 +71,19 @@ const checkCaptures = (board: CellState[][], newlyPlacedRow: number, newlyPlaced
           group.forEach(([gr, gc]) => {
             nextBoard[gr][gc] = 'empty';
           });
+          capturedOpponent = true;
         }
       }
+    }
+  }
+
+  // Check self capture (Suicide) - prevalent in Tsumego for "under the stones"
+  if (!capturedOpponent) {
+    const selfGroup = getGroup(newlyPlacedRow, newlyPlacedCol, stoneColor);
+    if (selfGroup.liberties === 0) {
+      selfGroup.group.forEach(([gr, gc]) => {
+        nextBoard[gr][gc] = 'empty';
+      });
     }
   }
 
@@ -100,6 +112,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
   const placeStone = useCallback((row: number, col: number, color: 'black' | 'white') => {
     const key = `${col},${row}`
     setBoardState(prev => {
+      if (prev[row][col] !== 'empty') return prev;
       const next = prev.map(r => [...r])
       next[row][col] = color
       return checkCaptures(next, row, col, color)
@@ -190,6 +203,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
         playStoneSound(step % 2 === 1);
         
         setBoardState(prev => {
+          if (prev[row][col] !== 'empty') return prev; // prevent overwrite
           const next = prev.map(r => [...r]);
           next[row][col] = color;
           return checkCaptures(next, row, col, color);
