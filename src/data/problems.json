@@ -1,0 +1,324 @@
+{
+  "problems": [
+    {
+      "id": 1,
+      "title": "단수와 장문 1",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 1, "color": "white"}
+      ],
+      "solution": ["3,2"],
+      "explanation": "단수로 상대를 압박하면 살 수 있다. 흑이 (3,2)에 두면 백이 단수가 되어 도망갈 곳이 없어집니다."
+    },
+    {
+      "id": 2,
+      "title": "두 집 만들기",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"}
+      ],
+      "solution": ["3,3"],
+      "explanation": "두 집을 확보하면 완전한 삶이다. (3,3)에 두면 흑이 두 개의 집을 가지게 되어 살 수 있습니다."
+    },
+    {
+      "id": 3,
+      "title": "연결과 끊음",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 1, "y": 1, "color": "black"},
+        {"x": 3, "y": 1, "color": "black"},
+        {"x": 2, "y": 1, "color": "white"}
+      ],
+      "solution": ["2,2"],
+      "explanation": "끊긴 돌을 연결하는 것이 핵심이다. (2,2)에 두면 백돌을 포획하고 흑을 연결할 수 있습니다."
+    },
+    {
+      "id": 4,
+      "title": "외통수 잡기",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 1, "y": 1, "color": "white"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 1, "y": 2, "color": "black"}
+      ],
+      "solution": ["1,1"],
+      "explanation": "모퉁이의 백을 잡는 문제입니다. 흑이 (1,1)에 두면... 아니, 이미 백이 있군요. 빈 공간에 두어 단수를 만드세요."
+    },
+    {
+      "id": 5,
+      "title": "귀의 활용",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 2, "y": 1, "color": "white"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 3, "y": 1, "color": "black"}
+      ],
+      "solution": ["1,1"],
+      "explanation": "귀에서 백의 두 돌을 잡는 문제입니다. (1,1)에 두면 백 두 돌이 단수가 되어 잡을 수 있습니다."
+    },
+    {
+      "id": 6,
+      "title": "장문의 기초",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 3, "y": 3, "color": "white"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"}
+      ],
+      "solution": ["3,4"],
+      "explanation": "장문으로 백을 포위하는 문제. (3,4)에 두면 백이 완전히 포위되어 도망갈 수 없습니다."
+    },
+    {
+      "id": 7,
+      "title": "촉촉수 기초",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 1, "y": 1, "color": "white"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 1, "y": 3, "color": "black"}
+      ],
+      "solution": ["2,3"],
+      "explanation": "촉촉수는 상대를 단수로 만들어 잡는 기술입니다. (2,3)이 급소입니다."
+    },
+    {
+      "id": 8,
+      "title": "한 집 만들기",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 1, "color": "white"}
+      ],
+      "solution": ["3,3"],
+      "explanation": "흑이 살기 위해서는 집을 만들어야 합니다. (3,3)이 유일한 삶의 길입니다."
+    },
+    {
+      "id": 9,
+      "title": "단수 추격",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 3, "y": 4, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"}
+      ],
+      "solution": ["5,4"],
+      "explanation": "백을 귀 쪽으로 몰아가면 잡을 수 있습니다. (5,4)로 도망가는 길을 막으세요."
+    },
+    {
+      "id": 10,
+      "title": "기초 포위",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 3, "y": 3, "color": "white"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"}
+      ],
+      "solution": ["3,4"],
+      "explanation": "백을 완전히 포위하는 마지막 수입니다. (3,4)에 두어 백을 잡으세요."
+    },
+    {
+      "id": 11,
+      "title": "사석 작전",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 3, "y": 3, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"},
+        {"x": 3, "y": 4, "color": "black"},
+        {"x": 5, "y": 3, "color": "white"},
+        {"x": 3, "y": 5, "color": "white"},
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 2, "y": 3, "color": "white"},
+        {"x": 3, "y": 2, "color": "white"}
+      ],
+      "solution": ["4,5"],
+      "explanation": "사석 작전은 돌을 희생하여 더 큰 이득을 얻는 기술입니다. (4,5)가 급소입니다."
+    },
+    {
+      "id": 12,
+      "title": "귀의 사활: 기초",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 1, "y": 1, "color": "black"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 3, "y": 1, "color": "black"},
+        {"x": 1, "y": 2, "color": "black"},
+        {"x": 1, "y": 3, "color": "white"},
+        {"x": 2, "y": 2, "color": "white"},
+        {"x": 3, "y": 2, "color": "white"},
+        {"x": 4, "y": 1, "color": "white"}
+      ],
+      "solution": ["2,3"],
+      "explanation": "귀의 흑돌을 살리는 급소입니다. (2,3)에 두어 두 집을 확보하세요."
+    },
+    {
+      "id": 13,
+      "title": "행마의 급소",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 4, "y": 4, "color": "black"},
+        {"x": 5, "y": 4, "color": "black"},
+        {"x": 4, "y": 5, "color": "black"},
+        {"x": 3, "y": 4, "color": "white"},
+        {"x": 4, "y": 3, "color": "white"},
+        {"x": 6, "y": 4, "color": "white"},
+        {"x": 4, "y": 6, "color": "white"},
+        {"x": 5, "y": 5, "color": "white"}
+      ],
+      "solution": ["5,3"],
+      "explanation": "행마의 급소를 찾는 문제입니다. (5,3)이 흑의 살길을 열어줍니다."
+    },
+    {
+      "id": 14,
+      "title": "패의 기초",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 1, "color": "white"},
+        {"x": 3, "y": 3, "color": "white"},
+        {"x": 4, "y": 2, "color": "white"}
+      ],
+      "solution": ["3,4"],
+      "explanation": "패는 바둑에서 중요한 전술입니다. (3,4)가 패를 만드는 급소입니다."
+    },
+    {
+      "id": 15,
+      "title": "수상전",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 5, "y": 5, "color": "black"},
+        {"x": 6, "y": 5, "color": "black"},
+        {"x": 5, "y": 6, "color": "black"},
+        {"x": 7, "y": 5, "color": "white"},
+        {"x": 5, "y": 7, "color": "white"},
+        {"x": 6, "y": 6, "color": "white"}
+      ],
+      "solution": ["6,7"],
+      "explanation": "수상전은 활로 수를 비교하는 싸움입니다. (6,7)이 흑의 승리를 결정짓는 수입니다."
+    },
+    {
+      "id": 16,
+      "title": "귀의 사활: 육사팔활",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 1, "y": 1, "color": "black"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 3, "y": 1, "color": "black"},
+        {"x": 4, "y": 1, "color": "black"},
+        {"x": 1, "y": 2, "color": "black"},
+        {"x": 1, "y": 3, "color": "black"},
+        {"x": 2, "y": 3, "color": "white"},
+        {"x": 3, "y": 2, "color": "white"},
+        {"x": 4, "y": 2, "color": "white"},
+        {"x": 5, "y": 1, "color": "white"}
+      ],
+      "solution": ["2,2"],
+      "explanation": "육사팔활은 귀 사활의 기본 패턴입니다. (2,2)가 삶과 죽음을 가르는 최선의 수입니다."
+    },
+    {
+      "id": 17,
+      "title": "정석 이후 변화",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 3, "y": 3, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"},
+        {"x": 3, "y": 4, "color": "black"},
+        {"x": 5, "y": 3, "color": "white"},
+        {"x": 3, "y": 5, "color": "white"},
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 6, "y": 3, "color": "white"}
+      ],
+      "solution": ["4,5"],
+      "explanation": "정석 이후의 변화를 읽는 문제입니다. (4,5)가 백의 약점을 공략하는 수입니다."
+    },
+    {
+      "id": 18,
+      "title": "포위망 탈출",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 5, "y": 5, "color": "black"},
+        {"x": 4, "y": 5, "color": "white"},
+        {"x": 6, "y": 5, "color": "white"},
+        {"x": 5, "y": 4, "color": "white"},
+        {"x": 5, "y": 6, "color": "white"}
+      ],
+      "solution": ["5,3"],
+      "explanation": "포위된 흑돌을 살리는 문제입니다. (5,3)으로 탈출구를 만드세요."
+    },
+    {
+      "id": 19,
+      "title": "중앙 전투",
+      "difficulty": "hard",
+      "boardSize": 9,
+      "stones": [
+        {"x": 5, "y": 5, "color": "black"},
+        {"x": 4, "y": 5, "color": "black"},
+        {"x": 5, "y": 4, "color": "black"},
+        {"x": 6, "y": 5, "color": "black"},
+        {"x": 5, "y": 6, "color": "black"},
+        {"x": 3, "y": 5, "color": "white"},
+        {"x": 5, "y": 3, "color": "white"},
+        {"x": 7, "y": 5, "color": "white"},
+        {"x": 5, "y": 7, "color": "white"},
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 6, "y": 4, "color": "white"}
+      ],
+      "solution": ["4,6"],
+      "explanation": "중앙에서의 복잡한 사활 문제입니다. 깊은 수읽기가 필요합니다. (4,6)이 핵심 수입니다."
+    },
+    {
+      "id": 20,
+      "title": "수읽기의 극의",
+      "difficulty": "hard",
+      "boardSize": 9,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 4, "y": 2, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 2, "y": 4, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 1, "y": 3, "color": "white"},
+        {"x": 1, "y": 4, "color": "white"},
+        {"x": 2, "y": 1, "color": "white"},
+        {"x": 3, "y": 1, "color": "white"},
+        {"x": 4, "y": 1, "color": "white"},
+        {"x": 5, "y": 2, "color": "white"},
+        {"x": 3, "y": 3, "color": "white"}
+      ],
+      "solution": ["3,4"],
+      "explanation": "고수들도 어려워하는 복잡한 사활 문제입니다. 수십 수의 수읽기가 필요합니다. (3,4)가 유일한 삶의 길입니다."
+    }
+  ]
+}
