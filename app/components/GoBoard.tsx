@@ -110,7 +110,7 @@ export default function GoBoard({ problem, onSolve, onProgress, disabled = false
   const aiColor: 'black' | 'white' = playerColor === 'black' ? 'white' : 'black'
 
   const placeStone = useCallback((row: number, col: number, color: 'black' | 'white') => {
-    const key = `${col},${row}`
+    const key = `${col + 1},${row + 1}`
     setBoardState(prev => {
       if (prev[row][col] !== 'empty') return prev;
       const next = prev.map(r => [...r])
