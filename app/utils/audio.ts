@@ -26,50 +26,54 @@ export const playStoneSound = (isAI = false, volume = 0.4) => {
 
     const now = ctx.currentTime;
     
-    // 1. 목재 타격음 (Noise Burst)
-    const bufferSize = ctx.sampleRate * 0.05; // 50ms noise
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1;
-    }
-
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-
-    const noiseFilter = ctx.createBiquadFilter();
-    noiseFilter.type = 'bandpass';
-    noiseFilter.frequency.setValueAtTime(isAI ? 800 : 1000, now);
-    noiseFilter.Q.setValueAtTime(1, now);
-
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(volume * 0.5, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.03);
-
-    noise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
-
-    // 2. 목재 공명음 (Resonance)
-    const osc = ctx.createOscillator();
-    const oscGain = ctx.createGain();
+    // 1. 묵직한 목재 타격음 (Low-frequency Thud)
+    const thud = ctx.createOscillator();
+    const thudGain = ctx.createGain();
     
-    // 바둑판의 두께와 재질을 시뮬레이션하는 주파수 믹스
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(isAI ? 380 : 440, now);
-    osc.frequency.exponentialRampToValueAtTime(isAI ? 180 : 220, now + 0.08);
+    thud.type = 'triangle';
+    thud.frequency.setValueAtTime(isAI ? 180 : 200, now);
+    thud.frequency.exponentialRampToValueAtTime(isAI ? 80 : 100, now + 0.1);
 
-    oscGain.gain.setValueAtTime(volume, now);
-    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    thudGain.gain.setValueAtTime(volume * 0.7, now);
+    thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
 
-    osc.connect(oscGain);
-    oscGain.connect(ctx.destination);
+    thud.connect(thudGain);
+    thudGain.connect(ctx.destination);
 
-    // 실행
-    noise.start(now);
-    noise.stop(now + 0.05);
-    osc.start(now);
-    osc.stop(now + 0.15);
+    // 2. 고주파 타격 "딱" 소리 (Transient click)
+    const click = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    
+    click.type = 'sine';
+    click.frequency.setValueAtTime(1100, now);
+    click.frequency.exponentialRampToValueAtTime(700, now + 0.02);
+
+    clickGain.gain.setValueAtTime(volume * 0.5, now);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+    click.connect(clickGain);
+    clickGain.connect(ctx.destination);
+
+    // 3. 목재 공명 (Mid-range Resonance)
+    const res = ctx.createOscillator();
+    const resGain = ctx.createGain();
+    
+    res.type = 'triangle';
+    res.frequency.setValueAtTime(isAI ? 340 : 380, now);
+
+    resGain.gain.setValueAtTime(volume * 0.25, now);
+    resGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+    res.connect(resGain);
+    resGain.connect(ctx.destination);
+
+    // Start and Stop
+    thud.start(now);
+    thud.stop(now + 0.12);
+    click.start(now);
+    click.stop(now + 0.03);
+    res.start(now);
+    res.stop(now + 0.08);
 
   } catch (e) {
     console.error('Audio play failed:', e);

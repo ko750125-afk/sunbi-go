@@ -71,11 +71,6 @@ export default function Home() {
             </span>
           </button>
         </div>
-
-        <div className="pt-8 opacity-30 text-center">
-          <span className="material-symbols-outlined text-4xl">format_quote</span>
-          <p className="text-lg font-serif italic">정수를 찾는 길은 멈추지 않는 공부에 있습니다.</p>
-        </div>
       </main>
 
       <BottomNavBar />

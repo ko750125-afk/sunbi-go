@@ -15,8 +15,8 @@ export default function TopAppBar() {
   return (
     <header className="fixed top-0 z-50 w-full bg-[#fbfbe2] border-b-4 border-[#e4e4cc] flex justify-between items-center px-6 py-4">
       <div className="flex items-center gap-4">
-        <span className="material-symbols-outlined text-[#422b27] text-3xl">menu</span>
-        <Link href="/">
+        <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
+          <span className="material-symbols-outlined text-[#422b27] text-3xl">menu</span>
           <h1 className="font-serif text-3xl font-black text-[#422b27] tracking-tight">선비의 공부방</h1>
         </Link>
       </div>

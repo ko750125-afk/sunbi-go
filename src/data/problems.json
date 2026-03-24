@@ -324,6 +324,177 @@
       ],
       "solution": ["3,4", "4,3", "4,4", "5,3", "3,5", "4,5", "2,5"],
       "explanation": "고단자도 어려워하는 최상급 사활. 7수 이상의 완벽한 수읽기가 필요합니다."
+    },
+    {
+      "id": 21,
+      "title": "옥집 피하기",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 1, "color": "white"},
+        {"x": 4, "y": 2, "color": "white"}
+      ],
+      "solution": ["3,3", "4,3", "3,1"],
+      "explanation": "옥집은 가짜 집입니다. (3,3)으로 확실한 집의 형태를 만들고, 백의 파고들기 공격을 막아냅니다."
+    },
+    {
+      "id": 22,
+      "title": "환격의 기초",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 1, "y": 1, "color": "white"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 1, "y": 2, "color": "black"},
+        {"x": 2, "y": 2, "color": "white"}
+      ],
+      "solution": ["2,3", "1,1", "1,2"],
+      "explanation": "환격(환경)은 상대가 내 돌을 따낼 때 다시 따내는 기술입니다. (2,3)으로 유도하고 백을 잡습니다."
+    },
+    {
+      "id": 23,
+      "title": "벼랑 끝 단수",
+      "difficulty": "easy",
+      "boardSize": 5,
+      "stones": [
+        {"x": 4, "y": 1, "color": "white"},
+        {"x": 3, "y": 1, "color": "black"},
+        {"x": 4, "y": 2, "color": "black"}
+      ],
+      "solution": ["5,1", "5,2", "4,1"],
+      "explanation": "1선은 바둑판의 끝입니다. 백을 1선으로 몰아넣어 도망갈 곳이 없게 만드는 기본 기술입니다."
+    },
+    {
+      "id": 24,
+      "title": "궁도 넓히기",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 2, "y": 2, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 4, "y": 2, "color": "black"},
+        {"x": 2, "y": 1, "color": "white"},
+        {"x": 3, "y": 1, "color": "white"},
+        {"x": 4, "y": 1, "color": "white"},
+        {"x": 5, "y": 2, "color": "white"}
+      ],
+      "solution": ["3,3", "2,3", "4,3", "5,3", "3,4"],
+      "explanation": "사는 궁도를 만드는 문제. (3,3)으로 공간을 확보하고 백의 치중을 막아 두 집을 냅니다."
+    },
+    {
+      "id": 25,
+      "title": "먹여치기의 묘수",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 1, "y": 1, "color": "white"},
+        {"x": 1, "y": 2, "color": "white"},
+        {"x": 2, "y": 2, "color": "white"},
+        {"x": 1, "y": 3, "color": "black"},
+        {"x": 2, "y": 3, "color": "black"},
+        {"x": 3, "y": 2, "color": "black"},
+        {"x": 3, "y": 1, "color": "black"}
+      ],
+      "solution": ["2,1", "1,1", "2,2", "1,2", "3,2"],
+      "explanation": "먹여치기로 상대의 수를 줄이는 고급 기술. 자신의 돌 하나를 희생해 백 전체를 잡습니다."
+    },
+    {
+      "id": 26,
+      "title": "치중의 급소",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 4, "y": 5, "color": "white"},
+        {"x": 5, "y": 4, "color": "white"},
+        {"x": 5, "y": 5, "color": "white"},
+        {"x": 3, "y": 4, "color": "black"},
+        {"x": 3, "y": 5, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"},
+        {"x": 5, "y": 3, "color": "black"}
+      ],
+      "solution": ["4,5", "6,4", "6,5", "5,6", "4,6"],
+      "explanation": "적의 급소는 나의 급소. 백이 눈을 만들려는 자리에 먼저 두어 사활을 결정짓습니다."
+    },
+    {
+      "id": 27,
+      "title": "유가무가(有家無家)",
+      "difficulty": "medium",
+      "boardSize": 9,
+      "stones": [
+        {"x": 1, "y": 1, "color": "black"},
+        {"x": 1, "y": 2, "color": "black"},
+        {"x": 2, "y": 1, "color": "black"},
+        {"x": 3, "y": 3, "color": "white"},
+        {"x": 4, "y": 3, "color": "white"},
+        {"x": 3, "y": 4, "color": "white"},
+        {"x": 2, "y": 2, "color": "white"}
+      ],
+      "solution": ["1,3", "2,3", "1,4", "2,4", "3,4"],
+      "explanation": "집이 있는 쪽이 없는 쪽을 이기는 원리. (1,3)으로 집을 먼저 확보하여 수상전에서 이깁니다."
+    },
+    {
+      "id": 28,
+      "title": "꽃육궁 사활",
+      "difficulty": "hard",
+      "boardSize": 9,
+      "stones": [
+        {"x": 3, "y": 3, "color": "black"},
+        {"x": 4, "y": 3, "color": "black"},
+        {"x": 5, "y": 3, "color": "black"},
+        {"x": 3, "y": 4, "color": "black"},
+        {"x": 4, "y": 4, "color": "black"},
+        {"x": 5, "y": 4, "color": "black"},
+        {"x": 2, "y": 3, "color": "white"},
+        {"x": 2, "y": 4, "color": "white"},
+        {"x": 3, "y": 2, "color": "white"},
+        {"x": 4, "y": 1, "color": "white"},
+        {"x": 5, "y": 2, "color": "white"}
+      ],
+      "solution": ["4,5", "5,5", "4,6", "3,6", "5,6", "6,4", "6,5"],
+      "explanation": "꽃육궁은 잡히기 쉬운 형태입니다. 급소인 (4,5)를 먼저 점유하여 흑을 살려야 합니다."
+    },
+    {
+      "id": 29,
+      "title": "자충을 유도하라",
+      "difficulty": "hard",
+      "boardSize": 9,
+      "stones": [
+        {"x": 5, "y": 5, "color": "white"},
+        {"x": 6, "y": 5, "color": "white"},
+        {"x": 5, "y": 6, "color": "white"},
+        {"x": 4, "y": 5, "color": "black"},
+        {"x": 5, "y": 4, "color": "black"},
+        {"x": 7, "y": 5, "color": "black"},
+        {"x": 6, "y": 4, "color": "black"},
+        {"x": 5, "y": 7, "color": "black"}
+      ],
+      "solution": ["6,6", "7,6", "6,7", "7,7", "8,6", "8,5", "7,4"],
+      "explanation": "백이 자신의 활로를 스스로 메우게(자충) 만드는 수법. 치밀한 수순이 필요합니다."
+    },
+    {
+      "id": 30,
+      "title": "사활의 극치: 좌우동형",
+      "difficulty": "hard",
+      "boardSize": 9,
+      "stones": [
+        {"x": 3, "y": 5, "color": "black"},
+        {"x": 4, "y": 5, "color": "black"},
+        {"x": 5, "y": 5, "color": "black"},
+        {"x": 6, "y": 5, "color": "black"},
+        {"x": 7, "y": 5, "color": "black"},
+        {"x": 3, "y": 4, "color": "white"},
+        {"x": 4, "y": 4, "color": "white"},
+        {"x": 6, "y": 4, "color": "white"},
+        {"x": 7, "y": 4, "color": "white"},
+        {"x": 5, "y": 3, "color": "white"}
+      ],
+      "solution": ["5,4", "4,3", "6,3", "3,3", "7,3", "4,2", "6,2"],
+      "explanation": "좌우동형은 중앙이 급소! (5,4) 중앙을 먼저 차지한 뒤 대칭적으로 대응하여 백을 잡습니다."
     }
   ]
 }

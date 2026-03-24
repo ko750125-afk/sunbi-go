@@ -13,7 +13,7 @@ export default function BottomNavBar() {
   const pathname = usePathname()
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-surface-container border-t-2 border-outline-variant flex justify-around items-center px-4 pb-8 pt-4 z-50 shadow-2xl">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#fbfbe2] border-t-2 border-[#e4e4cc] flex justify-around items-center px-4 pb-8 pt-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       {navItems.map(item => {
         const isActive = pathname === item.href
         return (
