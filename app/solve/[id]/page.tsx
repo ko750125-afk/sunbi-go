@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useState, useCallback, useMemo } from 'react'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import TopAppBar from '../../components/TopAppBar'
 import BottomNavBar from '../../components/BottomNavBar'
 import GoBoard from '../../components/GoBoard'
 import problemsData from '@/src/data/problems.json'
 import { Problem, GameStats } from '../../types'
+import { playClickSound, playSuccessSound } from '../../utils/audio'
 
 const problems = problemsData.problems as Problem[]
 
@@ -35,6 +36,9 @@ type GameStatus = 'playing' | 'correct' | 'wrong'
 export default function SolvePage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  
   const id = Number(params.id)
   const problem = problems.find(p => p.id === id)
 
@@ -47,6 +51,7 @@ export default function SolvePage() {
   const handleSolve = useCallback((isCorrect: boolean) => {
     setShowProgress(false)
     if (isCorrect) {
+      playSuccessSound()
       setStatus('correct')
       try {
         const raw = localStorage.getItem('sunbi_stats')
@@ -84,33 +89,51 @@ export default function SolvePage() {
   }, [id, attempts])
 
   const handleProgress = useCallback((moveIndex: number, total: number) => {
-    // Only show message after player's moves (even indices)
     if (moveIndex > 0 && moveIndex < total && moveIndex % 2 === 1) {
       const msgIdx = Math.min(Math.floor((moveIndex - 1) / 2), progressMessages.length - 1)
       setProgressMsg(progressMessages[msgIdx])
       setShowProgress(true)
-      setTimeout(() => setShowProgress(false), 2000)
+      setTimeout(() => setShowProgress(false), 1500)
     }
   }, [])
 
   const handleRetry = () => {
+    playClickSound()
     setStatus('playing')
     setShowProgress(false)
     setProgressMsg('')
     setBoardKey(prev => prev + 1)
   }
 
+  const handleNextShuffle = () => {
+    playClickSound()
+    if (!problem) return
+    const filtered = problems.filter(p => p.difficulty === problem.difficulty && p.id !== id)
+    if (filtered.length > 0) {
+      const next = filtered[Math.floor(Math.random() * filtered.length)]
+      router.push(`/solve/${next.id}?mode=shuffle`)
+      // Reset state for the new problem
+      setStatus('playing')
+      setBoardKey(prev => prev + 1)
+      setAttempts(0)
+    } else {
+      router.push('/')
+    }
+  }
+
   const nextProblem = problems.find(p => p.id === id + 1)
-  const prevProblem = problems.find(p => p.id === id - 1)
 
   if (!problem) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-6">
           <p className="text-4xl text-primary font-black">문제를 찾을 수 없습니다</p>
-          <Link href="/problems">
-            <button className="bg-primary text-on-primary px-10 py-6 rounded-xl text-3xl font-bold">목록으로</button>
-          </Link>
+          <button 
+            onClick={() => router.push('/')}
+            className="bg-primary text-on-primary px-10 py-6 rounded-xl text-3xl font-bold"
+          >
+            홈으로
+          </button>
         </div>
       </div>
     )
@@ -124,11 +147,11 @@ export default function SolvePage() {
         {/* Header */}
         <div className="flex items-center gap-4">
           <button
-            onClick={() => router.back()}
+            onClick={() => { playClickSound(); router.push('/'); }}
             className="flex items-center gap-2 text-primary font-bold text-xl hover:bg-surface-container px-4 py-2 rounded-lg transition-colors"
           >
-            <span className="material-symbols-outlined text-3xl">arrow_back</span>
-            돌아가기
+            <span className="material-symbols-outlined text-3xl">home</span>
+            홈으로
           </button>
         </div>
 
@@ -206,20 +229,33 @@ export default function SolvePage() {
                 <span className="material-symbols-outlined text-3xl">refresh</span>
                 다시 풀기
               </button>
-              {nextProblem ? (
-                <Link href={`/solve/${nextProblem.id}`} className="flex-1">
-                  <button className="w-full h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-3">
+              
+              {mode === 'shuffle' ? (
+                <button 
+                  onClick={handleNextShuffle}
+                  className="flex-3 h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-3"
+                >
+                  다음 랜덤 문제
+                  <span className="material-symbols-outlined text-3xl">shuffle</span>
+                </button>
+              ) : nextProblem ? (
+                <Link href={`/solve/${nextProblem.id}`} className="flex-3">
+                  <button 
+                    onClick={() => playClickSound()}
+                    className="w-full h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-3"
+                  >
                     다음 문제
                     <span className="material-symbols-outlined text-3xl">arrow_forward</span>
                   </button>
                 </Link>
               ) : (
-                <Link href="/problems" className="flex-1">
-                  <button className="w-full h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-3">
-                    목록으로
-                    <span className="material-symbols-outlined text-3xl">list</span>
-                  </button>
-                </Link>
+                <button 
+                  onClick={() => { playClickSound(); router.push('/'); }}
+                  className="flex-3 h-20 bg-primary text-on-primary text-2xl font-black rounded-xl shadow-lg hover:bg-primary-container transition-all flex items-center justify-center gap-3"
+                >
+                  다른 난이도 도전
+                  <span className="material-symbols-outlined text-3xl">home</span>
+                </button>
               )}
             </div>
           </div>
@@ -256,31 +292,6 @@ export default function SolvePage() {
             </button>
           </div>
         )}
-
-        {/* Problem navigation */}
-        <div className="flex justify-between items-center pt-4 border-t-2 border-outline-variant">
-          {prevProblem ? (
-            <Link href={`/solve/${prevProblem.id}`}>
-              <button className="flex items-center gap-2 text-primary font-bold text-xl hover:bg-surface-container px-6 py-4 rounded-xl transition-colors">
-                <span className="material-symbols-outlined">chevron_left</span>
-                이전
-              </button>
-            </Link>
-          ) : <span />}
-          <Link href="/problems">
-            <button className="text-on-surface-variant font-bold text-xl hover:bg-surface-container px-6 py-4 rounded-xl transition-colors">
-              목록
-            </button>
-          </Link>
-          {nextProblem ? (
-            <Link href={`/solve/${nextProblem.id}`}>
-              <button className="flex items-center gap-2 text-primary font-bold text-xl hover:bg-surface-container px-6 py-4 rounded-xl transition-colors">
-                다음
-                <span className="material-symbols-outlined">chevron_right</span>
-              </button>
-            </Link>
-          ) : <span />}
-        </div>
 
       </main>
       <BottomNavBar />

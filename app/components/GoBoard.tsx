@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { Stone, Problem } from '../types'
+import { useState, useCallback, useRef } from 'react'
+import { Problem } from '../types'
+import { playStoneSound } from '../utils/audio'
 
 interface GoBoardProps {
   problem: Problem
@@ -11,34 +12,6 @@ interface GoBoardProps {
 }
 
 type CellState = 'empty' | 'black' | 'white'
-type MoveResult = 'player' | 'ai' | null
-
-// Web Audio API stone sound — no external deps
-function playStoneSound(isAI = false) {
-  try {
-    const ctx = new (window.AudioContext || (window as unknown as Record<string, unknown>).webkitAudioContext as typeof AudioContext)()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    const freq = isAI ? 650 : 800
-
-    osc.type = 'triangle'
-    osc.frequency.setValueAtTime(freq, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(isAI ? 160 : 200, ctx.currentTime + 0.09)
-
-    gain.gain.setValueAtTime(isAI ? 0.3 : 0.4, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14)
-
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start()
-    osc.stop(ctx.currentTime + 0.16)
-
-    // Auto-close
-    setTimeout(() => ctx.close(), 300)
-  } catch {
-    // Silently ignore if AudioContext not available
-  }
-}
 
 function initBoard(problem: Problem): CellState[][] {
   const size = problem.boardSize

@@ -2,28 +2,29 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { playClickSound } from '../utils/audio'
 
 const navItems = [
   { href: '/', label: '홈', icon: 'home' },
-  { href: '/problems', label: '문제들', icon: 'extension' },
-  { href: '/records', label: '기록', icon: 'history' },
+  { href: '/records', label: '나의 기록', icon: 'history' },
 ]
 
 export default function BottomNavBar() {
   const pathname = usePathname()
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#fbfbe2] border-t-4 border-[#e4e4cc] flex justify-around items-center px-4 pb-8 pt-4 z-50 shadow-2xl">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-surface-container border-t-2 border-outline-variant flex justify-around items-center px-4 pb-8 pt-4 z-50 shadow-2xl">
       {navItems.map(item => {
         const isActive = pathname === item.href
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center px-4 py-2 rounded-xl transition-all ${
+            onClick={() => playClickSound()}
+            className={`flex flex-col items-center justify-center px-8 py-2 rounded-2xl transition-all ${
               isActive
-                ? 'bg-[#ffdad4] text-[#422b27] scale-110'
-                : 'text-[#5b413c]'
+                ? 'bg-primary text-on-primary scale-105 shadow-md'
+                : 'text-on-surface-variant'
             }`}
           >
             <span
@@ -32,7 +33,7 @@ export default function BottomNavBar() {
             >
               {item.icon}
             </span>
-            <span className="font-serif text-xl font-bold">{item.label}</span>
+            <span className="font-bold text-lg">{item.label}</span>
           </Link>
         )
       })}
