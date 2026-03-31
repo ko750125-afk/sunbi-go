@@ -63,7 +63,9 @@ export default function SolvePage() {
       setStatus('correct')
       try {
         const raw = localStorage.getItem('sunbi_stats')
-        const stats: GameStats = raw ? JSON.parse(raw) : { records: [] }
+        const stats: GameStats & { lastSequentialId?: number | null } = raw ? JSON.parse(raw) : { records: [] }
+        
+        // Save overall stats
         const existing = stats.records.find(r => r.problemId === id)
         if (existing) {
           existing.solved = true
@@ -77,6 +79,10 @@ export default function SolvePage() {
             solvedAt: new Date().toISOString(),
           })
         }
+
+        // Save last sequential progress
+        stats.lastSequentialId = id
+        
         localStorage.setItem('sunbi_stats', JSON.stringify(stats))
       } catch {}
     } else {
@@ -254,12 +260,34 @@ export default function SolvePage() {
 
             {/* Navigation buttons */}
             <div className="flex flex-col gap-4">
-              {mode === 'shuffle' ? (
+              {mode === 'sequence' ? (
+                <button 
+                  onClick={() => {
+                    playClickSound()
+                    const nextId = id + 1
+                    const exists = problems.some(p => p.id === nextId)
+                    if (exists) {
+                      router.push(`/solve/${nextId}?mode=sequence`)
+                      setStatus('playing')
+                      setBoardKey(prev => prev + 1)
+                      setAttempts(0)
+                      setShowAnswer(false)
+                    } else {
+                      alert('마지막 문제입니다. 축하합니다!')
+                      router.push('/')
+                    }
+                  }}
+                  className="h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
+                >
+                  다음 문제 (#{(id + 1)})
+                  <span className="material-symbols-outlined text-4xl">arrow_forward_ios</span>
+                </button>
+              ) : mode === 'shuffle' ? (
                 <button 
                   onClick={handleNextShuffle}
                   className="h-24 bg-primary text-on-primary text-3xl font-black rounded-2xl shadow-xl hover:bg-primary-container transition-all flex items-center justify-center gap-4 active:scale-95"
                 >
-                  다음 문제 풀기
+                  다음 랜덤 문제
                   <span className="material-symbols-outlined text-4xl">shuffle</span>
                 </button>
               ) : nextProblem ? (

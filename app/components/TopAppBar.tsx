@@ -20,20 +20,29 @@ export default function TopAppBar() {
           <h1 className="font-serif text-3xl font-black text-[#422b27] tracking-tight">선비의 공부방</h1>
         </Link>
       </div>
-      <div className="hidden md:flex gap-8 items-center">
-        {navLinks.map(link => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`font-serif text-lg font-bold px-3 py-1 rounded transition-colors ${
-              pathname === link.href
-                ? 'text-[#422b27] border-b-2 border-[#422b27]'
-                : 'text-[#5b413c] hover:bg-[#efefd7]'
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
+      <div className="flex items-center gap-4">
+        <div className="hidden md:flex gap-8 items-center mr-4">
+          {navLinks.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`font-serif text-lg font-bold px-3 py-1 rounded transition-colors ${
+                pathname === link.href
+                  ? 'text-[#422b27] border-b-2 border-[#422b27]'
+                  : 'text-[#5b413c] hover:bg-[#efefd7]'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <Link 
+          href="/admin" 
+          title="관리자 도구"
+          className="p-2 hover:bg-[#efefd7] rounded-full transition-colors flex items-center justify-center"
+        >
+          <span className="material-symbols-outlined text-[#422b27] text-3xl">settings_applications</span>
+        </Link>
       </div>
     </header>
   )
